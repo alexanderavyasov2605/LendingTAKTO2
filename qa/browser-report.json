@@ -1,0 +1,53 @@
+{
+  "passed": [
+    "Desktop home renders with all images",
+    "Rapid slider changes cancel previous animation; keyboard works",
+    "Calculator, cart editing, contact validation, copy, focus trap and original trigger restoration",
+    "Cart survives reload, removes items and shows an empty state",
+    "Search, category catalog, sorting, empty search and favorites persistence",
+    "Home ScrollTriggers are cleaned when route unmounts",
+    "Scroll reveal completes, FAQ toggles, material tabs support keyboard",
+    "No horizontal overflow at 1536, 1440, 1280, 1024, 768, 390, 360",
+    "Full-height mobile menu, configured Telegram, mobile catalog and calculator",
+    "Repeated dialogs, branded 404 and information pages",
+    "Reduced motion shows all content and skips split animations"
+  ],
+  "layouts": [
+    {
+      "width": 1536,
+      "scrollWidth": 1536,
+      "headingRight": 661.953125
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "headingRight": 621.34375
+    },
+    {
+      "width": 1280,
+      "scrollWidth": 1280,
+      "headingRight": 542.59375
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "headingRight": 443.140625
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "headingRight": 334.375
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "headingRight": 320.90625
+    },
+    {
+      "width": 360,
+      "scrollWidth": 360,
+      "headingRight": 295.796875
+    }
+  ],
+  "errors": []
+}
