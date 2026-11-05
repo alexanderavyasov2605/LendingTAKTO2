@@ -1,0 +1,117 @@
+{
+  "layouts": [
+    {
+      "width": 1536,
+      "scrollWidth": 1536,
+      "bodyWidth": 1536,
+      "brokenImages": [],
+      "heading": {
+        "x": 62,
+        "y": 163.796875,
+        "width": 599.953125,
+        "height": 202.40625,
+        "top": 163.796875,
+        "right": 661.953125,
+        "bottom": 366.203125,
+        "left": 62
+      }
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "brokenImages": [],
+      "heading": {
+        "x": 62,
+        "y": 160.796875,
+        "width": 559.34375,
+        "height": 190.6875,
+        "top": 160.796875,
+        "right": 621.34375,
+        "bottom": 351.484375,
+        "left": 62
+      }
+    },
+    {
+      "width": 1280,
+      "scrollWidth": 1280,
+      "bodyWidth": 1280,
+      "brokenImages": [],
+      "heading": {
+        "x": 42,
+        "y": 160.796875,
+        "width": 500.59375,
+        "height": 171.1875,
+        "top": 160.796875,
+        "right": 542.59375,
+        "bottom": 331.984375,
+        "left": 42
+      }
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "bodyWidth": 1024,
+      "brokenImages": [],
+      "heading": {
+        "x": 42,
+        "y": 144,
+        "width": 401.140625,
+        "height": 139.921875,
+        "top": 144,
+        "right": 443.140625,
+        "bottom": 283.921875,
+        "left": 42
+      }
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "brokenImages": [],
+      "heading": {
+        "x": 22,
+        "y": 144,
+        "width": 312.375,
+        "height": 114.328125,
+        "top": 144,
+        "right": 334.375,
+        "bottom": 258.328125,
+        "left": 22
+      }
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyWidth": 390,
+      "brokenImages": [],
+      "heading": {
+        "x": 18,
+        "y": 132.390625,
+        "width": 272.5,
+        "height": 107.9375,
+        "top": 132.390625,
+        "right": 290.5,
+        "bottom": 240.328125,
+        "left": 18
+      }
+    },
+    {
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "brokenImages": [],
+      "heading": {
+        "x": 18,
+        "y": 132,
+        "width": 198.828125,
+        "height": 84.546875,
+        "top": 132,
+        "right": 216.828125,
+        "bottom": 216.546875,
+        "left": 18
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,187 @@
+{
+  "generator": "built-in imagegen",
+  "images": [
+    {
+      "file": "01-stickers.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1897074,
+      "sha256": "cd890dcd4f7449058d7f89d7e24b5ddaf076cf5be0136ed969d7cc420250a2b3"
+    },
+    {
+      "file": "02-tags.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2070597,
+      "sha256": "a947809705b645bddc22e8fd94e418cee1b47f5741fb287d15cbc00e96002c1d"
+    },
+    {
+      "file": "03-packaging.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2204879,
+      "sha256": "35d4f7c80f20393405e9705e7edfbd5a110afd8fe6d3a7dc3f5bdd17924c820f"
+    },
+    {
+      "file": "04-business-cards.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2272891,
+      "sha256": "ec0f6c581f4586272855e43ddac6ba725345bd64f19ff22c5036af5bdba5461f"
+    },
+    {
+      "file": "05-postcards.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2121579,
+      "sha256": "221289a90bacdbd5302f3e262e4ed6a14ab8ac3e882eb2824656592d90b401f7"
+    },
+    {
+      "file": "06-labels.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1730275,
+      "sha256": "a7ce906ec88bafc20155c35a9de999420575a68a7d2ec4ae4e603443df6b8597"
+    },
+    {
+      "file": "07-bags.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1810450,
+      "sha256": "34981e854acb77148fdd21c7251f6a48c565233c7f98d0687ff084b71413073d"
+    },
+    {
+      "file": "08-notebooks.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2345526,
+      "sha256": "260aecc5234b57354fe4c76521ca236eeee894f291d9f061fb1af1818d775248"
+    },
+    {
+      "file": "09-calendars.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1998045,
+      "sha256": "199d1c954929026d808eeed8ddcee723b60cf3fc173f12794685a87c5a129d23"
+    },
+    {
+      "file": "10-surface-stickers.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2054796,
+      "sha256": "52803216dd30775b2bc50532594a93d23d5754f9cc0340d3d1be2ac9a39b3ef0"
+    },
+    {
+      "file": "11-promo.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1851481,
+      "sha256": "def0a01dd1767b56eea343eb3dc0f6d412ea110b6cf5bdfc569f1302cdfd2c24"
+    },
+    {
+      "file": "12-personalization.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1834180,
+      "sha256": "f8073ae65532fc4d3ee94291d7722731634e1df2b03b0d8e7a1348e8a3a1dbd0"
+    },
+    {
+      "file": "13-material-holographic.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2934407,
+      "sha256": "8bfd56b212fc05434d67eac89c03ff2612e6645516c23fffa9317b81cbc67654"
+    },
+    {
+      "file": "14-material-dichroic.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2112598,
+      "sha256": "5645ba1f0ab29e1293dbe7d0d593785563a747cf86780a451ed87f32dea3d1ca"
+    },
+    {
+      "file": "15-material-photochromic.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 3885932,
+      "sha256": "1ce0e2b6231249ede910d73d53b3301f5bd23488c557f30d63ef2ab7b9dda201"
+    },
+    {
+      "file": "16-material-thermochromic.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 3789883,
+      "sha256": "6756fd65aa6ed0bce1fc48da368ea087a167f5e4c1b71571a93030ab9f33a07d"
+    },
+    {
+      "file": "17-material-glow.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2012783,
+      "sha256": "a808465447f2b49084fea48b632debc3c1cdcc873759bc5d499b504f76150fe9"
+    },
+    {
+      "file": "18-material-flock.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2436067,
+      "sha256": "74905b3df4bc5446358a8dac3e2dcd1d88fc2f3558129c6616264409e6fa37e8"
+    },
+    {
+      "file": "19-material-mirror.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2686263,
+      "sha256": "b8ec87cd091a4f405f3fe91d3816c827f924c4ca829796b0419bae591fb9a50e"
+    },
+    {
+      "file": "20-material-textured.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 3039738,
+      "sha256": "47060a65af1db1ce7211df8f83343f0b9401260838205bb7030f7cd8bf002e03"
+    },
+    {
+      "file": "21-material-scratch.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 4029809,
+      "sha256": "41fce803b8aee0733fb5ddefc51fc1e6536103e890e8d02270f7464e756c9c3c"
+    },
+    {
+      "file": "22-material-void.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 3144362,
+      "sha256": "a709a9232ce6b3c9ca5d2e80cf414f55a140a5321bd73ed7c97d5d5721e49f7d"
+    },
+    {
+      "file": "23-material-fan.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2256996,
+      "sha256": "b7539f0b3fe7151af65e9653ef281d8a187c81d02e5c41ad04e05a829d9a7afd"
+    },
+    {
+      "file": "24-hero.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2447665,
+      "sha256": "e0945f99c24f44069bac0deb928b631e80a44413931fbfa3b5d5b7d75e1a0c03"
+    }
+  ],
+  "icons": [
+    "assembly.svg",
+    "brand.svg",
+    "calculator.svg",
+    "custom-project.svg",
+    "design.svg",
+    "die-cut.svg",
+    "emboss.svg",
+    "fast.svg",
+    "lamination.svg",
+    "premium.svg",
+    "small-batch.svg",
+    "telegram.svg"
+  ]
+}
