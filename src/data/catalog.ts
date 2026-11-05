@@ -1,3 +1,4 @@
+
 import { productBasePrices } from './pricing';
 
 export interface Category {
@@ -5,6 +6,7 @@ export interface Category {
   name: string;
   shortName: string;
   image: string;
+  homeImage?: string;
 }
 
 export interface Product {
