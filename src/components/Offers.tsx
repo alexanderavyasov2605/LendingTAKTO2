@@ -1,0 +1,29 @@
+import { useState } from 'react';
+import { ArrowUpRight, Check } from 'lucide-react';
+import { useCommerce } from '../commerce';
+import { additionalBatchPrice, businessPlans, commercialTermsConfirmed, readyKits, subscriptionTerms, welcomeKitPrice } from '../config/offers';
+import { formatPrice } from '../data/pricing';
+import '../pages/products.css';
+// Small vector mockups illustrate the kits without claiming to be product photos.
+function KitArtwork({ id, name }: { id: string; name: string }) {
+  return <svg viewBox="0 0 420 270" role="img" aria-label={`Визуальная концепция набора ${name}`} className={`kit-art kit-art-${id}`}>
+    <rect width="420" height="270" fill={id === 'premium' ? '#222632' : '#e8e4d9'}/>
+    {id === 'space' ? <g><rect x="85" y="20" width="250" height="230" rx="5" fill="#bfc9c5" stroke="#10131c" strokeWidth="7"/><path d="M210 20V250M85 195H335" stroke="#10131c" strokeWidth="5"/><text x="120" y="110" fontSize="43" fontWeight="800" fill="#10131c">TAKTO.</text><path d="M125 130H185M125 143H170" stroke="#10131c" strokeWidth="5"/><circle cx="230" cy="160" r="4" fill="#10131c"/></g> : <g>
+      {id === 'premium' && <g transform="translate(220 65) rotate(12)"><path d="M0 0H125V105H0Z" fill="#d6ff00"/><path d="M0 0L25 -20H145L125 0ZM125 0L145 -20V85L125 105Z" fill="#a0bd14"/><text x="15" y="50" fill="#10131c" fontSize="23" fontWeight="800">TAKTO.</text></g>}
+      <g transform="translate(55 75) rotate(-10)"><rect width="165" height="105" rx="5" fill="#10131c"/><text x="19" y="45" fontSize="26" fontWeight="800" fill="#f5f1e8">THANK YOU.</text><path d="M20 64H110M20 75H80" stroke="#d6ff00" strokeWidth="3"/></g>
+      <g transform="translate(225 125) rotate(16)"><path d="M0 0L20 -16H82V115H0Z" fill="#f5f1e8" stroke="#d1ccc0"/><circle cx="40" cy="3" r="4" fill="#10131c"/><path d="M40 3C60 -55 90 -60 75 -15" fill="none" stroke="#10131c"/><text x="12" y="60" fontSize="15" fontWeight="800">TAKTO.</text></g>
+      <circle cx="150" cy="203" r="37" fill="#d6ff00"/><text x="129" y="213" fill="#10131c" fontSize="38">✳</text>
+      {id === 'marketplace' && <g transform="translate(260 35)"><rect width="105" height="70" rx="5" fill="white"/>{Array.from({length:13},(_,i) => <rect key={i} x={12+i*6} y="13" width={i%3+1} height="38" fill="#10131c"/>)}</g>}
+      {id === 'standard' && <g transform="translate(265 40) rotate(8)"><rect width="95" height="60" rx="5" fill="#d6ff00"/><text x="12" y="36" fontSize="18" fontWeight="800">TAKTO.</text></g>}
+    </g>}
+    <text x="18" y="251" fontSize="9" letterSpacing="2" fill={id === 'premium' ? '#a9acb6' : '#64665f'}>TAKTO. / ВИЗУАЛЬНАЯ КОНЦЕПЦИЯ</text>
+  </svg>;
+}
+export function ReadyKits() {
+  const { openContact } = useCommerce();
+  return <section className="ready-kits page-width section-space" id="kits"><div className="section-heading"><div><p className="eyebrow">ГОТОВЫЕ НАБОРЫ TAKTO.</p><h2>Всё для вашего бренда.<br/>Уже собрано.</h2></div><p className="section-intro">Продуманные комплекты брендированной продукции для разных задач бизнеса.</p></div><div className="kits-track">{readyKits.map((kit,index) => <article className="kit-card" key={kit.id}><KitArtwork id={kit.id} name={kit.name}/><div className="kit-content"><span className="kit-number">0{index+1} / РАЗОВЫЙ КОМПЛЕКТ</span><h3>{kit.name}</h3><p>{kit.description}</p><details><summary>Состав набора <span>+</span></summary><ul>{kit.contents.map(item => <li key={item}>{item}</li>)}</ul></details><strong>{formatPrice(kit.price)} <small>сум</small></strong><button className="button button-dark" onClick={() => openContact(`Готовый набор: ${kit.name}\nСостав:\n${kit.contents.map(i => `• ${i}`).join('\n')}\nСтоимость: ${formatPrice(kit.price)} сум\n${commercialTermsConfirmed ? '' : 'Проектные условия. Требуется окончательное подтверждение студии.'}`)}>Выбрать набор <ArrowUpRight size={19}/></button></div></article>)}</div>{!commercialTermsConfirmed && <p className="offers-note">Проектные коммерческие условия. Состав и стоимость окончательно подтверждаем перед запуском заказа.</p>}</section>;
+}
+export function BusinessPlans() {
+  const { openContact } = useCommerce(); const [term, setTerm] = useState<number>(3);
+  return <section className="business-section" id="business"><div className="page-width"><div className="section-heading"><div><p className="eyebrow">TAKTO. BUSINESS</p><h2>Ваш бренд.<br/><span>На регулярной основе.</span></h2></div><p className="section-intro">Регулярные поставки фирменной продукции и обновления дизайна без постоянного оформления новых заказов.</p></div><div className="business-period"><span>Срок подписки</span><div role="group" aria-label="Срок подписки">{subscriptionTerms.map(value => <button key={value} aria-pressed={term === value} onClick={() => setTerm(value)}>{value} мес.</button>)}</div></div><div className="business-grid">{businessPlans.map(plan => <article key={plan.id}><p className="eyebrow">{plan.name}</p><h3>{formatPrice(plan.price)} <small>сум / мес.</small></h3><ul><li><Check size={18}/>{plan.deliveries} {plan.deliveries === 1 ? 'поставка' : 'поставки'} × 50 изделий</li><li><Check size={18}/>{plan.designUpdates} {plan.designUpdates === 1 ? 'обновление' : 'обновления'} дизайна в месяц</li><li><Check size={18}/>Срок: {term} мес.</li></ul><button className="button button-lime" onClick={() => openContact(`Подписка TAKTO. BUSINESS\nТариф: ${plan.name}\nСтоимость: ${formatPrice(plan.price)} сум/мес.\nСрок: ${term} месяцев\nПоставки: ${plan.deliveries} × 50 изделий в месяц\nОбновлений дизайна: ${plan.designUpdates} в месяц\nОбсудить условия и начало подписки.`)}>Обсудить подписку <ArrowUpRight size={18}/></button></article>)}</div><div className="business-extras"><p>Дополнительная партия <b>{formatPrice(additionalBatchPrice)} сум</b></p><p>Отдельный Welcome Kit <b>{formatPrice(welcomeKitPrice)} сум</b></p></div></div></section>;
+}

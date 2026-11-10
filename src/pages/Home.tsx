@@ -4,7 +4,8 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Box, Check, ChevronDown
 import { gsap, ScrollTrigger, SplitText, useGSAP } from '../animations/gsap';
 import { TelegramButton } from '../components/TelegramButton';
 import { brand } from '../config/brand';
-import { categories } from '../data/catalog';
+import { CatalogShowcase } from '../components/CatalogShowcase';
+import { ReadyKits, BusinessPlans } from '../components/Offers';
 import { materials, materialsNote } from '../data/materials';
 
 const TELEGRAM_URL = 'https://t.me/takto_order';
@@ -91,7 +92,6 @@ export default function Home() {
         .from('.hero-description, .hero-actions', { y: 18, opacity: 0, stagger: .08, duration: .5 }, .64)
         .from('.hero-visual', { scale: .96, opacity: 0, y: 16, duration: .8 }, .4)
         .from('.hero-stat', { y: 12, opacity: 0, stagger: .09, duration: .5 }, .85);
-      gsap.from('.category-card', { y: 28, opacity: 0, stagger: .065, duration: .6, ease: 'power2.out', scrollTrigger: {trigger: '.category-strip', start: 'top 95%', once: true} });
       gsap.utils.toArray<HTMLElement>('[data-reveal]', root.current).forEach(section => gsap.from(section, { y: 24, opacity: 0, duration: .65, scrollTrigger: {trigger: section, start: 'top 94%', once: true} }));
       gsap.from('.benefit-item', { y: 12, opacity: 0, stagger: .06, duration: .5, scrollTrigger: { trigger: '.benefits-bar', start: 'top 95%', once: true } });
       const tagline = SplitText.create('.studio-tagline', { type: 'words' });
@@ -114,9 +114,12 @@ export default function Home() {
         <div className="hero-copy"><p className="eyebrow hero-eyebrow"><span className="corner-mark" aria-hidden="true"/>ПЕЧАТЬ <b>·</b> БРЕНДИРОВАНИЕ <b>·</b> УПАКОВКА</p><h1 id="hero-title" className="hero-heading">Креативная<br/>печатная продукция<br/><span className="hero-highlight">для брендов и идей</span></h1><p className="hero-description">Стикеры, упаковка, полиграфия, винил и брендинг —<br className="desktop-break"/> от дизайна до готового продукта.</p><div className="hero-actions"><a className="button button-dark" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Рассчитать стоимость <ArrowRight size={20}/></a><Link to="/catalog" className="button button-outline"><Play size={20}/>Смотреть каталог</Link></div><div className="hero-stats">{brand.statistics.map((stat,index) => <div className="hero-stat" key={stat.label}>{index===2 && <Zap className="stat-lightning" size={42} strokeWidth={1.5}/>}<div><strong className={index===2 ? 'stat-small' : ''}>{stat.value}</strong><span>{stat.label}</span></div></div>)}</div>{!brand.statisticsConfirmed && <p className="stats-note">Целевые показатели. Возможности и сроки уточняем для вашего проекта.</p>}</div>
         <HeroSlider/>
       </section>
-      <section className="category-strip page-width" aria-label="Категории продукции">{categories.map(category => <Link className={`category-card category-${category.id}`} to={`/catalog/${category.id}`} key={category.id}><div className="category-photo"><img src={category.homeImage ?? category.image} alt="" width="400" height="300" loading="lazy"/></div><div className="category-card-bottom"><h2>{category.name}</h2><span className="round-arrow"><ArrowRight size={21}/></span></div></Link>)}</section>
       <section className="benefits-bar page-width" aria-label="Возможности студии"><h2>Всё для вашего бренда</h2><div className="benefits-items">{benefits.map(({Icon,title,text}) => <div className="benefit-item" key={title}><Icon size={31} strokeWidth={1.5}/><p>{title}<span>{text}</span></p></div>)}</div></section>
     </div>
+
+    <CatalogShowcase/>
+    <ReadyKits/>
+    <BusinessPlans/>
 
     <section className="materials-section page-width section-space" id="materials" aria-labelledby="materials-title">
       <div className="section-heading" data-reveal><div><p className="eyebrow">НЕ ТОЛЬКО ВИДЕТЬ. ЧУВСТВОВАТЬ.</p><h2 id="materials-title">Материал меняет<br/><span className="muted-heading">всё впечатление.</span></h2></div><p className="section-intro">Тактильная бумага, глубокий матовый цвет или голографические переливы. Найдём то самое сочетание для вашего бренда.</p></div>

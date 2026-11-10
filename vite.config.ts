@@ -4,5 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  build: { chunkSizeWarningLimit: 650 },
+  build: {
+    chunkSizeWarningLimit: 650,
+    rollupOptions: { output: { manualChunks: { supabase: ['@supabase/supabase-js'] } } },
+  },
 });
