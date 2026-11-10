@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
-export type CartItem = { id: string; name: string; unitPrice: number; quantity: number; details?: string };
+export type CartItem = { id: string; name: string; unitPrice: number | null; quantity: number; details?: string; priceUnit?: string; productId?: string };
 export type CommerceModal = { kind: 'calculator'; categoryId?: string } | { kind: 'contact'; summary?: string } | { kind: 'cart' } | { kind: 'search' } | null;
 type CommerceContextValue = {
   cart: CartItem[]; favorites: string[]; cartCount: number; modal: CommerceModal; storageAvailable: boolean;
@@ -18,7 +18,7 @@ function readStored(key: string): unknown {
 const validItem = (item: unknown): item is CartItem => {
   if (!item || typeof item !== 'object') return false;
   const value = item as CartItem;
-  return typeof value.id === 'string' && typeof value.name === 'string' && Number.isFinite(value.unitPrice) && value.unitPrice >= 0 && Number.isInteger(value.quantity) && value.quantity > 0 && value.quantity <= 100000 && (value.details === undefined || typeof value.details === 'string');
+  return typeof value.id === 'string' && typeof value.name === 'string' && (value.unitPrice === null || (Number.isFinite(value.unitPrice) && value.unitPrice > 0)) && Number.isInteger(value.quantity) && value.quantity > 0 && value.quantity <= 100000 && (value.details === undefined || typeof value.details === 'string') && (value.priceUnit === undefined || typeof value.priceUnit === 'string');
 };
 export function CommerceProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>(() => { const value = readStored(CART_KEY); return Array.isArray(value) ? value.filter(validItem).slice(0, 100) : []; });

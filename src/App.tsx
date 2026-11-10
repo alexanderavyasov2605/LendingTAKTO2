@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { ArrowUpRight, Menu, Search, ShoppingBag } from 'lucide-react';
 import { CommerceProvider, CommerceOverlays, Modal, useCommerce } from './commerce';
 import { TelegramButton } from './components/TelegramButton';
 import Home from './pages/Home';
-import Catalog from './pages/Catalog';
+import Catalog from './pages/DynamicCatalog';
+import ProductPage from './pages/Product';
+import { CatalogProvider } from './catalog/CatalogProvider';
 import Information from './pages/Information';
+
+const Admin = lazy(() => import('./admin/Admin'));
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,5 +48,7 @@ function Footer() {
 function NotFound() { return <main id="main-content" className="not-found page-width"><p className="eyebrow">404 / НЕМНОГО НЕ ТУДА</p><h1>Здесь пока<br/>чистый лист.</h1><p>Вернёмся к вашим идеям?</p><Link className="button button-dark" to="/">На главную <ArrowUpRight size={20}/></Link></main>; }
 
 export default function App() {
-  return <CommerceProvider><ScrollManager/><Header/><Routes><Route path="/" element={<Home/>}/><Route path="/catalog" element={<Catalog/>}/><Route path="/catalog/:categoryId" element={<Catalog/>}/><Route path="/privacy" element={<Information kind="privacy"/>}/><Route path="/terms" element={<Information kind="terms"/>}/><Route path="*" element={<NotFound/>}/></Routes><Footer/><CommerceOverlays/></CommerceProvider>;
+  const { pathname } = useLocation();
+  const admin = pathname === '/admin' || pathname.startsWith('/admin/');
+  return <CatalogProvider><CommerceProvider><ScrollManager/>{!admin && <Header/>}<Routes><Route path="/" element={<Home/>}/><Route path="/catalog" element={<Catalog/>}/><Route path="/catalog/:categoryId" element={<Catalog/>}/><Route path="/product/:slug" element={<ProductPage/>}/><Route path="/admin/*" element={<Suspense fallback={<main id="main-content" className="page-width" role="status">Загрузка панели управления…</main>}><Admin/></Suspense>}/><Route path="/privacy" element={<Information kind="privacy"/>}/><Route path="/terms" element={<Information kind="terms"/>}/><Route path="*" element={<NotFound/>}/></Routes>{!admin && <><Footer/><CommerceOverlays/></>}</CommerceProvider></CatalogProvider>;
 }

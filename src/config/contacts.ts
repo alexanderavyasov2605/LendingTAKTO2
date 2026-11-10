@@ -1,6 +1,6 @@
 /** Set the real studio contact before public launch. Leave empty until confirmed. */
 export const contacts = {
-  telegramUsername: '',
+  telegramUsername: 'takto_order',
   email: '',
   region: 'Узбекистан',
 } as const;
