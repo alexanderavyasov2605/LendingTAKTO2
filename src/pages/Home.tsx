@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Box, Check, ChevronDown, Layers, Package, Pencil, Play, Sparkles, Star, Truck, Zap } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Box, Check, ChevronDown, Layers, Package, Pencil, Sparkles, Star, Truck } from 'lucide-react';
 import { gsap, ScrollTrigger, SplitText, useGSAP } from '../animations/gsap';
 import { TelegramButton } from '../components/TelegramButton';
-import { brand } from '../config/brand';
+import { useCommerce } from '../commerce';
 import { CatalogShowcase } from '../components/CatalogShowcase';
 import { ReadyKits, BusinessPlans } from '../components/Offers';
 import { materials, materialsNote } from '../data/materials';
@@ -14,6 +14,12 @@ const slides = [
   { image: '/assets/24-hero.webp', alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки', label: 'Упаковка с характером' },
   { image: '/assets/01-stickers.webp', alt: 'Фигурные голографические стикеры TAKTO.', label: 'Маленькие детали. Большие эмоции.' },
   { image: '/assets/windows.webp', alt: 'Фирменная графика TAKTO. на стекле витрины', label: 'Ваш бренд — в пространстве' },
+];
+
+const directions = [
+  { slug: 'stickers', number: '01', title: 'Маленькая деталь.\nБольшой характер.', label: 'Стикеры и наклейки', image: '/assets/stickers-light.webp', alt: 'Визуальная концепция фигурных стикеров TAKTO.' },
+  { slug: 'packaging', number: '02', title: 'Первое впечатление\nначинается с упаковки.', label: 'Упаковка и коробки', image: '/assets/03-packaging.webp', alt: 'Визуальная концепция брендированной упаковки TAKTO.' },
+  { slug: 'cards', number: '03', title: 'То, что хочется\nоставить у себя.', label: 'Визитки и карточки', image: '/assets/cards-light.webp', alt: 'Визуальная концепция визиток TAKTO. на фактурной бумаге' },
 ];
 
 const benefits = [
@@ -58,9 +64,9 @@ function HeroSlider() {
   }, { scope: container, dependencies: [active] });
   const move = (delta: number) => setActive(value => (value + delta + slides.length) % slides.length);
   return <div className="hero-visual" ref={container} role="region" aria-roledescription="карусель" aria-label="Примеры продукции" tabIndex={0} onKeyDown={event => { if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); } if (event.key === 'ArrowRight') { event.preventDefault(); move(1); } }}>
-    <div className="lime-orbit lime-orbit-top" aria-hidden="true"/><div className="lime-orbit lime-orbit-bottom" aria-hidden="true"/>
     <div className="hero-image-frame">{slides.map((slide, index) => <div className="hero-slide" key={slide.image} style={{opacity: index === 0 ? 1 : 0}} aria-hidden={index !== active}><img src={slide.image} alt={slide.alt} width="1536" height="1024" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'}/></div>)}</div>
-    <div className="slider-controls"><span className="slide-caption" aria-live="polite">{slides[active].label}</span><button className="slider-arrow" onClick={() => move(-1)} aria-label="Предыдущий слайд"><ArrowLeft size={17}/></button><div className="slider-dots">{slides.map((slide,index) => <button key={slide.image} aria-label={`Слайд ${index+1}: ${slide.label}`} aria-current={active===index ? 'true' : undefined} onClick={() => setActive(index)} className={active===index ? 'active' : ''}/>)}</div><button className="slider-arrow" onClick={() => move(1)} aria-label="Следующий слайд"><ArrowRight size={17}/></button></div>
+    <div className="hero-image-label"><span>TAKTO. / DESIGN IN DETAILS</span><span>Визуальные концепции продукции</span></div>
+    <div className="slider-controls"><span className="slide-caption" aria-live="polite">{slides[active].label}</span><span className="slide-number" aria-hidden="true">0{active + 1} <span>/ 03</span></span><button className="slider-arrow" onClick={() => move(-1)} aria-label="Предыдущий слайд"><ArrowLeft size={18}/></button><div className="slider-dots">{slides.map((slide,index) => <button key={slide.image} aria-label={`Слайд ${index+1}: ${slide.label}`} aria-current={active===index ? 'true' : undefined} onClick={() => setActive(index)} className={active===index ? 'active' : ''}/>)}</div><button className="slider-arrow" onClick={() => move(1)} aria-label="Следующий слайд"><ArrowRight size={18}/></button></div>
   </div>;
 }
 
@@ -75,6 +81,7 @@ function FAQItem({ question, answer, index }: { question:string;answer:string;in
 }
 
 export default function Home() {
+  const { openContact } = useCommerce();
   const root = useRef<HTMLElement>(null);
   const [materialIndex, setMaterialIndex] = useState(0);
   const materialImage = useRef<HTMLImageElement>(null);
@@ -84,21 +91,14 @@ export default function Home() {
     media.add('(prefers-reduced-motion: no-preference)', () => {
       const split = SplitText.create('.hero-heading', { type: 'lines', linesClass: 'headline-line' });
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.from('.site-header .brand-lockup', { y: 12, opacity: 0, duration: .5 }, 0)
-        .from('.desktop-nav > a, .header-actions > *', { y: 8, opacity: 0, stagger: .04, duration: .4 }, .08)
-        .from('.hero-eyebrow', { y: 14, opacity: 0, duration: .4 }, .18)
-        .from(split.lines, { y: 24, opacity: 0, stagger: .09, duration: .6 }, .3)
-        .from('.hero-highlight', { '--highlight-scale': 0, duration: .65 }, .55)
-        .from('.hero-description, .hero-actions', { y: 18, opacity: 0, stagger: .08, duration: .5 }, .64)
-        .from('.hero-visual', { scale: .96, opacity: 0, y: 16, duration: .8 }, .4)
-        .from('.hero-stat', { y: 12, opacity: 0, stagger: .09, duration: .5 }, .85);
-      gsap.utils.toArray<HTMLElement>('[data-reveal]', root.current).forEach(section => gsap.from(section, { y: 24, opacity: 0, duration: .65, scrollTrigger: {trigger: section, start: 'top 94%', once: true} }));
+      tl.from('.hero-eyebrow', { y: 10, opacity: 0, duration: .35 }, 0)
+        .from(split.lines, { y: 20, opacity: 0, stagger: .07, duration: .55 }, .08)
+        .from('.hero-description, .hero-actions', { y: 12, opacity: 0, stagger: .05, duration: .4 }, .18)
+        .from('.hero-visual', { opacity: 0, y: 12, duration: .55 }, .18);
+      gsap.utils.toArray<HTMLElement>('[data-reveal]', root.current).forEach(section => gsap.from(section, { y: 18, opacity: 0, duration: .5, scrollTrigger: {trigger: section, start: 'top 96%', once: true} }));
       gsap.from('.benefit-item', { y: 12, opacity: 0, stagger: .06, duration: .5, scrollTrigger: { trigger: '.benefits-bar', start: 'top 95%', once: true } });
-      const tagline = SplitText.create('.studio-tagline', { type: 'words' });
-      gsap.from(tagline.words, { opacity: .28, stagger: .12, duration: .5, ease: 'power3.out', scrollTrigger: { trigger: '.studio-tagline', start: 'top 88%', end: 'bottom 48%', scrub: .7, once: true } });
-      return () => { split.revert(); tagline.revert(); };
+      return () => { split.revert(); };
     });
-    media.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => gsap.to('.lime-orbit', { y: 22, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 } }));
     const refresh = () => ScrollTrigger.refresh();
     document.fonts.ready.then(refresh);
     return () => media.revert();
@@ -108,23 +108,26 @@ export default function Home() {
     gsap.fromTo(materialImage.current, {opacity: .45, scale: 1.025}, {opacity: 1, scale: 1, duration: .4, overwrite: true});
   }, { dependencies: [materialIndex] });
 
-  return <main id="main-content" ref={root}>
+  return <main id="main-content" className="editorial-home" ref={root}>
     <div className="first-screen">
       <section className="hero page-width" aria-labelledby="hero-title">
-        <div className="hero-copy"><p className="eyebrow hero-eyebrow"><span className="corner-mark" aria-hidden="true"/>ПЕЧАТЬ <b>·</b> БРЕНДИРОВАНИЕ <b>·</b> УПАКОВКА</p><h1 id="hero-title" className="hero-heading">Креативная<br/>печатная продукция<br/><span className="hero-highlight">для брендов и идей</span></h1><p className="hero-description">Стикеры, упаковка, полиграфия, винил и брендинг —<br className="desktop-break"/> от дизайна до готового продукта.</p><div className="hero-actions"><a className="button button-dark" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Рассчитать стоимость <ArrowRight size={20}/></a><Link to="/catalog" className="button button-outline"><Play size={20}/>Смотреть каталог</Link></div><div className="hero-stats">{brand.statistics.map((stat,index) => <div className="hero-stat" key={stat.label}>{index===2 && <Zap className="stat-lightning" size={42} strokeWidth={1.5}/>}<div><strong className={index===2 ? 'stat-small' : ''}>{stat.value}</strong><span>{stat.label}</span></div></div>)}</div>{!brand.statisticsConfirmed && <p className="stats-note">Целевые показатели. Возможности и сроки уточняем для вашего проекта.</p>}</div>
+        <div className="hero-copy"><div><p className="eyebrow hero-eyebrow"><span className="brand-dot" aria-hidden="true"/>СТУДИЯ ПЕЧАТИ И БРЕНДИРОВАНИЯ</p><h1 id="hero-title" className="hero-heading">Идеи, которые<br/>можно <span>почувствовать.</span></h1></div><div className="hero-aside"><p className="hero-description">Печать, упаковка и детали, которые говорят за ваш бренд. От первого эскиза до готового изделия.</p><div className="hero-actions"><Link to="/catalog" className="button button-dark">Открыть каталог <ArrowUpRight size={20}/></Link><button className="text-link" onClick={() => openContact()}>Обсудить идею <ArrowRight size={18}/></button></div></div></div>
         <HeroSlider/>
       </section>
-      <section className="benefits-bar page-width" aria-label="Возможности студии"><h2>Всё для вашего бренда</h2><div className="benefits-items">{benefits.map(({Icon,title,text}) => <div className="benefit-item" key={title}><Icon size={31} strokeWidth={1.5}/><p>{title}<span>{text}</span></p></div>)}</div></section>
+      <section className="benefits-bar page-width" aria-label="Возможности студии"><h2>От идеи<br/>до результата.</h2><div className="benefits-items">{benefits.map(({Icon,title,text}) => <div className="benefit-item" key={title}><Icon size={24} strokeWidth={1.3}/><p>{title}<span>{text}</span></p></div>)}</div></section>
     </div>
 
+    <section className="directions-section page-width section-space" aria-labelledby="directions-title"><div className="section-heading" data-reveal><div><p className="eyebrow">01 / НАПРАВЛЕНИЯ</p><h2 id="directions-title">У каждой идеи<br/>есть своя форма.</h2></div><Link className="text-link" to="/catalog">Все направления <ArrowUpRight size={19}/></Link></div><div className="directions-grid">{directions.map(direction => <Link className="direction-card" to={`/catalog/${direction.slug}`} key={direction.slug} data-reveal><div className="direction-image"><img src={direction.image} alt={direction.alt} width="800" height="800" loading="lazy" decoding="async"/><span>{direction.number}</span></div><div className="direction-caption"><div><p>{direction.label}</p><h3>{direction.title}</h3></div><ArrowUpRight size={25} strokeWidth={1.3}/></div></Link>)}</div><div className="direction-more"><p>А ещё —</p><Link to="/catalog/tags">бирки и ярлыки <ArrowUpRight size={15}/></Link><Link to="/catalog/vinyl">винил и плоттер <ArrowUpRight size={15}/></Link><Link to="/catalog/windows">оформление витрин <ArrowUpRight size={15}/></Link><span>Изображения — визуальные концепции.</span></div></section>
+
     <CatalogShowcase/>
-    <ReadyKits/>
-    <BusinessPlans/>
 
     <section className="materials-section page-width section-space" id="materials" aria-labelledby="materials-title">
-      <div className="section-heading" data-reveal><div><p className="eyebrow">НЕ ТОЛЬКО ВИДЕТЬ. ЧУВСТВОВАТЬ.</p><h2 id="materials-title">Материал меняет<br/><span className="muted-heading">всё впечатление.</span></h2></div><p className="section-intro">Тактильная бумага, глубокий матовый цвет или голографические переливы. Найдём то самое сочетание для вашего бренда.</p></div>
+      <div className="section-heading" data-reveal><div><p className="eyebrow">02 / БИБЛИОТЕКА МАТЕРИАЛОВ</p><h2 id="materials-title">Не только видеть.<br/><span className="muted-heading">Чувствовать.</span></h2></div><p className="section-intro">Тактильная бумага, глубокий матовый цвет или голографические переливы. Найдём то самое сочетание для вашего бренда.</p></div>
       <div className="material-showcase" data-reveal><div className="material-preview"><img key={selectedMaterial.image} ref={materialImage} src={selectedMaterial.image} alt={`Визуальная концепция ${selectedMaterial.name}`} width="800" height="800" loading="lazy"/><span className="material-index">{String(materialIndex+1).padStart(2,'0')} / {materials.length}</span><span className="material-image-caption">THE FEELING OF YOUR BRAND</span></div><div className="material-details"><div className="material-tabs" role="tablist" aria-label="Материалы" onKeyDown={event => { if (['ArrowRight','ArrowLeft','Home','End'].includes(event.key)) {event.preventDefault(); const next = event.key==='Home' ? 0 : event.key==='End' ? materials.length-1 : (materialIndex+(event.key==='ArrowRight'?1:-1)+materials.length)%materials.length; setMaterialIndex(next); document.getElementById(`material-tab-${next}`)?.focus();} }}>{materials.map((material,index) => <button id={`material-tab-${index}`} key={material.id} role="tab" aria-selected={materialIndex===index} aria-controls="material-panel" tabIndex={materialIndex===index?0:-1} onClick={() => setMaterialIndex(index)} className={materialIndex===index ? 'selected' : ''}>{material.name}</button>)}</div><div role="tabpanel" id="material-panel" aria-labelledby={`material-tab-${materialIndex}`} tabIndex={0}><Sparkles size={28} strokeWidth={1.3}/><h3>{selectedMaterial.name}</h3><p>{selectedMaterial.description}</p><a className="text-link" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Подобрать материал <ArrowUpRight size={20}/></a></div><p className="fine-print">{materialsNote}</p></div></div>
     </section>
+
+    <ReadyKits/>
+    <BusinessPlans/>
 
     <section className="studio-section" id="about"><div className="page-width studio-grid"><div data-reveal><p className="eyebrow">TAKTO. / CREATIVE PRINT STUDIO</p><h2 className="studio-tagline">От дизайна до того,<br/>что можно <span>пощупать.</span></h2><p>Мы соединяем дизайн и производство, чтобы ваш бренд можно было не только увидеть — но и взять в руки.</p><p>От первой наклейки до продуманной упаковки. Поможем выбрать материал, разобраться в деталях и создать цельное впечатление.</p><a className="button button-lime" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Обсудить идею <ArrowUpRight size={20}/></a></div><div className="studio-photo" data-reveal><img src="/assets/23-material-fan.webp" width="800" height="800" loading="lazy" alt="Веер фактурных, голографических и цветных материалов TAKTO."/><span className="studio-stamp"><Star size={27}/><span>БОЛЬШЕ, ЧЕМ<br/>ПРОСТО ПЕЧАТЬ</span></span></div></div></section>
 
@@ -132,6 +135,6 @@ export default function Home() {
 
     <section className="faq-section page-width" aria-labelledby="faq-title"><div data-reveal><p className="eyebrow">ЕСТЬ ВОПРОСЫ?</p><h2 id="faq-title">Хороший проект<br/>начинается<br/> с диалога.</h2><a className="text-link" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Задать свой вопрос <ArrowUpRight size={20}/></a></div><div className="faq-list" data-reveal>{faqs.map(([question,answer],index) => <FAQItem key={question} question={question} answer={answer} index={index}/>)}</div></section>
 
-    <section className="contact-section page-width" id="contacts" data-reveal><div className="contact-spark" aria-hidden="true">✳</div><p className="eyebrow">ВАША СЛЕДУЮЩАЯ БОЛЬШАЯ ИДЕЯ</p><h2>Давайте сделаем<br/>ваш бренд заметнее.</h2><p>Расскажите, что задумали. Всё остальное обсудим вместе.</p><div className="contact-actions"><a className="button button-dark" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Рассчитать стоимость <ArrowRight size={20}/></a><TelegramButton className="contact-telegram"/></div></section>
+    <section className="contact-section page-width" id="contacts" data-reveal><div className="contact-spark" aria-hidden="true">✳</div><p className="eyebrow">СЛЕДУЮЩИЙ ПРОЕКТ — ВАШ</p><h2>Всё начинается<br/>с одной идеи.</h2><p>Расскажите, что задумали. Подберём форму, материал и способ воплотить это в жизнь.</p><div className="contact-actions"><button className="button button-dark" onClick={() => openContact()}>Обсудить проект <ArrowUpRight size={20}/></button><TelegramButton className="contact-telegram"/></div></section>
   </main>;
 }
