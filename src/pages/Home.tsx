@@ -10,8 +10,8 @@ import { ReadyKits, BusinessPlans } from '../components/Offers';
 const TELEGRAM_URL = 'https://t.me/takto_order';
 
 const slides = [
-  { image: '/assets/24-hero.webp', alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки', label: 'Упаковка с характером' },
-  { image: '/assets/01-stickers.webp', alt: 'Фигурные голографические стикеры TAKTO.', label: 'Маленькие детали. Большие эмоции.' },
+  { image: 'Hero.png', alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки', label: 'Упаковка с характером' },
+  { image: 'Hero2.png', alt: 'Фигурные голографические стикеры TAKTO.', label: 'Маленькие детали. Большие эмоции.' },
   { image: '/assets/windows.webp', alt: 'Фирменная графика TAKTO. на стекле витрины', label: 'Ваш бренд — в пространстве' },
 ];
 
@@ -183,7 +183,7 @@ export default function Home() {
     <section className="studio-section" id="about" aria-labelledby="studio-title">
       <div className="page-width studio-grid">
         <div className="studio-copy" data-reveal><p className="eyebrow">О СТУДИИ / CREATIVE PRINT STUDIO</p><h2 id="studio-title" className="studio-tagline">TAKTO.</h2><p>Соединяем дизайн и производство, чтобы ваш бренд можно было увидеть, почувствовать и взять в руки.</p><p>От наклейки до упаковки: поможем выбрать материал, продумать детали и создать цельное впечатление.</p><a className="text-link" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Обсудить идею <ArrowUpRight size={20} aria-hidden="true"/></a></div>
-        <div className="studio-photo" data-reveal><img src="/assets/23-material-fan.webp" width="800" height="800" loading="lazy" decoding="async" alt="Веер фактурных, голографических и цветных материалов TAKTO."/><span className="studio-stamp"><Star size={24} aria-hidden="true"/><span>БОЛЬШЕ, ЧЕМ<br/>ПРОСТО ПЕЧАТЬ</span></span></div>
+        <div className="studio-photo" data-reveal><img src="Hero1.png" width="800" height="800" loading="lazy" decoding="async" alt="Веер фактурных, голографических и цветных материалов TAKTO."/><span className="studio-stamp"><Star size={24} aria-hidden="true"/><span>БОЛЬШЕ, ЧЕМ<br/>ПРОСТО ПЕЧАТЬ</span></span></div>
       </div>
     </section>
 
