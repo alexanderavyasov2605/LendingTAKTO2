@@ -235,6 +235,7 @@ export default function Home() {
     </div>
 
     
+
 <div className="studio-photo" data-reveal>
   <img
     src={studioImage}
@@ -243,6 +244,12 @@ export default function Home() {
     loading="lazy"
     decoding="async"
     alt="Фирменная продукция TAKTO."
+    style={{
+      display: 'block',
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    }}
   />
 
   <span className="studio-stamp">
@@ -253,6 +260,7 @@ export default function Home() {
     </span>
   </span>
 </div>
+
 
   </div>
 </section>
