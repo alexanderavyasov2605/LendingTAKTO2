@@ -6,31 +6,14 @@ import { TelegramButton } from '../components/TelegramButton';
 import { useCommerce } from '../commerce';
 import { CatalogShowcase } from '../components/CatalogShowcase';
 import { ReadyKits, BusinessPlans } from '../components/Offers';
-import heroImage from '../../Hero.png';
-import hero2Image from '../../Hero2.png';
-import studioImage from '../../Hero1.png';
 
 const TELEGRAM_URL = 'https://t.me/takto_order';
 
-
 const slides = [
-  {
-    image: heroImage,
-    alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки',
-    label: 'Упаковка с характером'
-  },
-  {
-    image: hero2Image,
-    alt: 'Фигурные голографические стикеры TAKTO.',
-    label: 'Маленькие детали. Большие эмоции.'
-  },
-  {
-    image: '/assets/windows.webp',
-    alt: 'Фирменная графика TAKTO. на стекле витрины',
-    label: 'Ваш бренд — в пространстве'
-  },
+  { image: '/assets/24-hero.webp', alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки', label: 'Упаковка с характером' },
+  { image: '/assets/01-stickers.webp', alt: 'Фигурные голографические стикеры TAKTO.', label: 'Маленькие детали. Большие эмоции.' },
+  { image: '/assets/windows.webp', alt: 'Фирменная графика TAKTO. на стекле витрины', label: 'Ваш бренд — в пространстве' },
 ];
-
 
 const directions = [
   { slug: 'stickers', number: '01', title: 'Маленькая деталь.\nБольшой характер.', label: 'Стикеры и наклейки', image: '/assets/stickers-light.webp', alt: 'Визуальная концепция фигурных стикеров TAKTO.' },
@@ -64,23 +47,44 @@ function HeroSlider() {
   const [active, setActive] = useState(0);
   const container = useRef<HTMLDivElement>(null);
   const previous = useRef(0);
+  useGSAP((context) => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const finishTransition = () => {
+      if (!preference.matches) return;
+      context.add(() => {
+        const items = gsap.utils.toArray<HTMLElement>('.hero-slide', container.current);
+        gsap.killTweensOf(items);
+        items.forEach(item => gsap.set(item, { opacity: item.getAttribute('aria-hidden') === 'false' ? 1 : 0, scale: 1 }));
+        const caption = container.current?.querySelector('.slide-caption');
+        if (caption) {
+          gsap.killTweensOf(caption);
+          gsap.set(caption, { clearProps: 'transform,opacity' });
+        }
+      });
+    };
+    preference.addEventListener('change', finishTransition);
+    return () => preference.removeEventListener('change', finishTransition);
+  }, { scope: container });
   useGSAP(() => {
     const items = gsap.utils.toArray<HTMLElement>('.hero-slide', container.current);
+    const changed = previous.current !== active;
     gsap.killTweensOf(items);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      items.forEach((item, index) => gsap.set(item, { opacity: index === active ? 1 : 0, scale: 1 }));
+      items.forEach((item, index) => gsap.set(item, { opacity: index === active ? 1 : 0, scale: 1, zIndex: index === active ? 2 : 1 }));
     } else {
       items.forEach((item, index) => {
-        if (index !== active) gsap.to(item, { opacity: 0, scale: .98, duration: .25, overwrite: true });
+        gsap.set(item, { zIndex: index === active ? 2 : 1 });
+        if (index !== active) gsap.to(item, { opacity: 0, duration: .3, overwrite: true });
       });
-      gsap.fromTo(items[active], { opacity: previous.current === active ? 1 : 0, scale: previous.current === active ? 1 : 1.035 }, { opacity: 1, scale: 1, duration: .55, ease: 'power2.out', overwrite: true });
+      gsap.fromTo(items[active], { opacity: changed ? 0 : 1, scale: changed ? 1.045 : 1 }, { opacity: 1, scale: 1, duration: .6, ease: 'power3.out', overwrite: true });
+      if (changed) gsap.fromTo('.slide-caption', { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: .35, ease: 'power2.out', overwrite: true, clearProps: 'transform,opacity' });
     }
     previous.current = active;
     return () => { gsap.killTweensOf(items); };
   }, { scope: container, dependencies: [active] });
   const move = (delta: number) => setActive(value => (value + delta + slides.length) % slides.length);
   return <div className="hero-visual" ref={container} role="region" aria-roledescription="карусель" aria-label="Примеры продукции" tabIndex={0} onKeyDown={event => { if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); } if (event.key === 'ArrowRight') { event.preventDefault(); move(1); } }}>
-    <div className="hero-image-frame">{slides.map((slide, index) => <div className="hero-slide" key={slide.image} style={{opacity: index === 0 ? 1 : 0}} aria-hidden={index !== active}><img src={slide.image} alt={slide.alt} width="1536" height="1024" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'}/></div>)}</div>
+    <div className="hero-image-frame">{slides.map((slide, index) => <div className="hero-slide" key={slide.image} style={{opacity: index === 0 ? 1 : 0}} aria-hidden={index !== active}><img src={slide.image} alt={slide.alt} width="1536" height="1024" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'}/></div>)}<span className="hero-image-curtain" aria-hidden="true"/></div>
     <div className="hero-image-label"><span>TAKTO. / DESIGN IN DETAILS</span><span>Визуальные концепции продукции</span></div>
     <div className="slider-controls"><span className="slide-caption" aria-live="polite">{slides[active].label}</span><span className="slide-number" aria-hidden="true">0{active + 1} <span>/ 03</span></span><button className="slider-arrow" onClick={() => move(-1)} aria-label="Предыдущий слайд"><ArrowLeft size={18}/></button><div className="slider-dots">{slides.map((slide,index) => <button key={slide.image} aria-label={`Слайд ${index+1}: ${slide.label}`} aria-current={active===index ? 'true' : undefined} onClick={() => setActive(index)} className={active===index ? 'active' : ''}/>)}</div><button className="slider-arrow" onClick={() => move(1)} aria-label="Следующий слайд"><ArrowRight size={18}/></button></div>
   </div>;
@@ -90,12 +94,18 @@ function FAQItem({ question, answer, index }: { question: string; answer: string
   const [open, setOpen] = useState(false);
   const content = useRef<HTMLDivElement>(null);
   useGSAP(() => {
+    if (!content.current) return;
+    if (!open && content.current.getBoundingClientRect().height === 0) {
+      gsap.killTweensOf(content.current);
+      gsap.set(content.current, { height: 0, opacity: 0 });
+      return;
+    }
     // Animate the actual height in both directions; an open answer remains fluid on resize.
     const tween = gsap.to(content.current, {
       height: open ? 'auto' : 0,
       opacity: open ? 1 : 0,
-      duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : .35,
-      ease: 'power2.out',
+      duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : .4,
+      ease: 'power3.out',
       overwrite: true,
       onComplete: () => ScrollTrigger.refresh(),
     });
@@ -111,54 +121,139 @@ export default function Home() {
   const { openContact } = useCommerce();
   const root = useRef<HTMLElement>(null);
   useGSAP(() => {
+    const page = root.current;
+    if (!page) return;
     const media = gsap.matchMedia();
     let disposed = false;
-    media.add('(prefers-reduced-motion: no-preference)', () => {
+    media.add('(prefers-reduced-motion: no-preference)', context => {
+      let stopped = false;
+      let catalogFrame = 0;
       const splits: ReturnType<typeof SplitText.create>[] = [];
-      const heroTitle = root.current?.querySelector<HTMLElement>('.hero-heading');
-      if (heroTitle) {
-        splits.push(SplitText.create(heroTitle, {
-          type: 'lines',
-          linesClass: 'headline-line',
-          autoSplit: true,
-          onSplit: self => gsap.from(self.lines, {
-            y: 24, opacity: 0, stagger: .09, duration: .6,
-            delay: .08, ease: 'power3.out', clearProps: 'transform,opacity',
-          }),
-        }));
-      }
-      gsap.timeline({ defaults: { ease: 'power3.out', clearProps: 'transform,opacity' } })
-        .from('.hero-eyebrow', { y: 8, opacity: 0, duration: .35 }, 0)
-        .from('.hero-visual', { y: 16, scale: .98, opacity: 0, duration: .65 }, .12)
-        .from('.hero-description', { y: 10, opacity: 0, duration: .45 }, .25)
-        .from('.hero-actions', { y: 8, opacity: 0, duration: .4 }, .4);
+      const entrances = new Map<HTMLElement, ReturnType<typeof gsap.from> | ReturnType<typeof gsap.timeline>>();
+      const shownCards = new WeakSet<HTMLElement>();
+      const defaults = { duration: .55, ease: 'power3.out', clearProps: 'transform,opacity' };
 
-      // Group cards under one trigger, keeping stagger short even on narrow screens.
-      gsap.utils.toArray<HTMLElement>('[data-stagger]', root.current).forEach(group => {
-        gsap.from(Array.from(group.children), {
-          y: 16, opacity: 0, stagger: .06, duration: .45, ease: 'power2.out',
-          clearProps: 'transform,opacity',
-          scrollTrigger: { trigger: group, start: 'top 94%', once: true },
-        });
-      });
-      gsap.utils.toArray<HTMLElement>('[data-reveal]', root.current).forEach(element => {
-        gsap.from(element, {
-          y: 16, opacity: 0, duration: .5, ease: 'power2.out',
-          clearProps: 'transform,opacity',
+      // Splitting each original hero line keeps its own font size and line box.
+      const splitHeading = (heading: HTMLElement, heroDelay?: number) => {
+        let complete = false;
+        splits.push(SplitText.create(heading, {
+          type: 'lines', mask: 'lines', linesClass: 'headline-line', autoSplit: true,
+          onSplit: self => {
+            if (complete || stopped) return;
+            const tween = gsap.from(self.lines, {
+              ...defaults, yPercent: 105, opacity: 0, duration: .65, stagger: .075,
+              delay: heroDelay ?? 0,
+              ...(heroDelay === undefined ? { scrollTrigger: { trigger: heading, start: 'top 92%', once: true } } : {}),
+              onComplete: () => { complete = true; },
+            });
+            entrances.set(heading, tween);
+            return tween;
+          },
+        }));
+      };
+      page.querySelectorAll<HTMLElement>('.hero-heading-line').forEach((line, index) => splitHeading(line, .06 + index * .1));
+      page.querySelectorAll<HTMLElement>('[data-split-heading]').forEach(heading => splitHeading(heading));
+
+      const heroIntro = gsap.timeline({ defaults })
+        .from('.hero-eyebrow', { y: 8, opacity: 0, duration: .35 }, 0)
+        .fromTo('.hero-image-curtain', { scaleX: 1 }, { scaleX: 0, duration: .7, clearProps: 'transform' }, .08)
+        .from('.hero-slide:first-child img', { scale: 1.065, duration: .7 }, .08)
+        .from('.hero-description', { y: 12, opacity: 0, duration: .45 }, .22)
+        .from('.hero-actions > *', { y: 10, opacity: 0, stagger: .055, duration: .4 }, .32)
+        .from('.hero-image-label, .slider-controls', { y: 8, opacity: 0, duration: .4, stagger: .05 }, .3);
+
+      const reveal = (element: HTMLElement, index = 0) => {
+        if (entrances.has(element)) return;
+        const tween = gsap.from(element, {
+          ...defaults, y: 20, opacity: 0, delay: Math.min(index, 3) * .055,
           scrollTrigger: { trigger: element, start: 'top 94%', once: true },
         });
+        entrances.set(element, tween);
+      };
+      page.querySelectorAll<HTMLElement>('[data-reveal]').forEach(element => reveal(element));
+      page.querySelectorAll<HTMLElement>('[data-stagger]').forEach(group => {
+        Array.from(group.children).forEach((child, index) => {
+          if (child instanceof HTMLElement) reveal(child, index);
+        });
       });
-      gsap.utils.toArray<HTMLElement>('[data-split-heading]', root.current).forEach(heading => {
-        splits.push(SplitText.create(heading, {
-          type: 'lines', linesClass: 'headline-line', autoSplit: true,
-          onSplit: self => gsap.from(self.lines, {
-            y: 14, opacity: 0, stagger: .07, duration: .5, ease: 'power2.out',
-            clearProps: 'transform,opacity',
-            scrollTrigger: { trigger: heading, start: 'top 94%', once: true },
-          }),
+
+      // A single short image reveal; frames retain their dimensions throughout.
+      page.querySelectorAll<HTMLElement>('.studio-photo, .faq-visual').forEach(frame => {
+        const image = frame.querySelector('img');
+        const stamp = frame.querySelector('.studio-stamp');
+        const timeline = gsap.timeline({ scrollTrigger: { trigger: frame, start: 'top 92%', once: true } })
+          .fromTo(frame, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .65, ease: 'power3.inOut', clearProps: 'clipPath' });
+        if (image) timeline.from(image, { scale: 1.065, duration: .7, ease: 'power3.out', clearProps: 'transform' }, 0);
+        if (stamp) timeline.from(stamp, { y: 10, rotation: -5, duration: .4, ease: 'power3.out', clearProps: 'transform' }, .25);
+        entrances.set(frame, timeline);
+      });
+      page.querySelectorAll<HTMLElement>('.step-number').forEach(number => {
+        entrances.set(number, gsap.from(number, {
+          scale: .82, rotation: -8, duration: .5, ease: 'back.out(1.3)', clearProps: 'transform',
+          scrollTrigger: { trigger: number, start: 'top 92%', once: true },
         }));
       });
-      return () => { splits.forEach(split => split.revert()); };
+
+      // IO respects horizontal clipping: off-screen carousel cards wait their turn.
+      const cards = new IntersectionObserver(entries => {
+        if (stopped) return;
+        entries.filter(entry => entry.isIntersecting).forEach((entry, index) => {
+          const element = entry.target as HTMLElement;
+          if (shownCards.has(element)) return;
+          shownCards.add(element);
+          entrances.get(element)?.delay(Math.min(index, 3) * .055).restart(true);
+          cards.unobserve(element);
+        });
+      }, { threshold: .08, rootMargin: '0px 0px -20px 0px' });
+      const registerOffers = () => {
+        page.querySelectorAll<HTMLElement>('.home-catalog .section-heading, .home-kits .section-heading, .home-business .section-heading, .kits-toolbar, .business-period, .business-extras, .offers-note').forEach(element => reveal(element));
+        page.querySelectorAll<HTMLElement>('.business-grid > article').forEach((element, index) => reveal(element, index));
+        page.querySelectorAll<HTMLElement>('.home-catalog .showcase-slide, .home-kits .kit-card').forEach(card => {
+          if (entrances.has(card)) return;
+          entrances.set(card, gsap.from(card, { ...defaults, y: 18, opacity: 0, paused: true }));
+          cards.observe(card);
+        });
+      };
+      registerOffers();
+      // Catalog data can arrive after mount; never observe GSAP's style mutations.
+      const catalog = page.querySelector('.home-catalog');
+      const catalogObserver = new MutationObserver(() => {
+        if (stopped || catalogFrame) return;
+        catalogFrame = requestAnimationFrame(() => {
+          catalogFrame = 0;
+          if (stopped) return;
+          context.add(registerOffers);
+          ScrollTrigger.refresh();
+        });
+      });
+      if (catalog) catalogObserver.observe(catalog, { childList: true, subtree: true });
+
+      // Keyboard users should never have to wait for a control to become visible.
+      const finishOnFocus = (event: FocusEvent) => {
+        if (!(event.target instanceof HTMLElement)) return;
+        if (event.target.closest('.hero')) heroIntro.progress(1);
+        for (const [element, animation] of entrances) {
+          if (element.contains(event.target)) {
+            cards.unobserve(element);
+            shownCards.add(element);
+            animation.scrollTrigger?.kill(false, true);
+            animation.progress(1);
+          }
+        }
+      };
+      page.addEventListener('focusin', finishOnFocus);
+      return () => {
+        stopped = true;
+        cards.disconnect();
+        catalogObserver.disconnect();
+        cancelAnimationFrame(catalogFrame);
+        page.removeEventListener('focusin', finishOnFocus);
+        splits.forEach(split => split.revert());
+        entrances.clear();
+      };
+    });
+    media.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.getTweensOf(page.querySelectorAll('.faq-answer')).forEach(tween => tween.progress(1));
     });
     // The font promise can resolve after route navigation; do not refresh a stale page.
     document.fonts.ready.then(() => { if (!disposed) ScrollTrigger.refresh(); });
@@ -170,7 +265,7 @@ export default function Home() {
       <section className="hero page-width" aria-labelledby="hero-title">
         <div className="hero-copy">
           <p className="eyebrow hero-eyebrow"><span className="brand-dot" aria-hidden="true"/>СТУДИЯ ПЕЧАТИ И БРЕНДИРОВАНИЯ</p>
-          <h1 id="hero-title" className="hero-heading"><span className="hero-heading-line">ПЕЧАТЬ</span><span className="hero-heading-line">С ХАРАКТЕРОМ.</span></h1>
+          <h1 id="hero-title" className="hero-heading"><span className="hero-heading-line hero-heading-lead">ПЕЧАТЬ</span><span className="hero-heading-line">С ХАРАКТЕРОМ.</span></h1>
           <div className="hero-aside">
             <p className="hero-description">Полиграфия, упаковка и детали для вашего бренда. От первого эскиза до готового изделия.</p>
             <div className="hero-actions"><Link to="/catalog" className="button button-orange">В каталог <ArrowRight size={20} aria-hidden="true"/></Link><button type="button" className="text-link" onClick={() => openContact()}>Обсудить идею <ArrowUpRight size={18} aria-hidden="true"/></button></div>
@@ -185,7 +280,7 @@ export default function Home() {
     </div>
 
     <section className="directions-section page-width section-space" aria-labelledby="directions-title">
-      <div className="section-heading" data-reveal><div><p className="eyebrow">01 / НАПРАВЛЕНИЯ</p><h2 id="directions-title">Что<br/> мы делаем</h2></div><Link className="text-link" to="/catalog">Все направления <ArrowUpRight size={19} aria-hidden="true"/></Link></div>
+      <div className="section-heading"><div><p className="eyebrow" data-reveal>01 / НАПРАВЛЕНИЯ</p><h2 id="directions-title" data-split-heading>Что<br/> мы делаем</h2></div><Link className="text-link" to="/catalog">Все направления <ArrowUpRight size={19} aria-hidden="true"/></Link></div>
       <div className="directions-grid" data-stagger>{directions.map(direction => <Link className={`direction-card direction-${direction.slug}`} to={`/catalog/${direction.slug}`} key={direction.slug}>
         <div className="direction-image"><img src={direction.image} alt={direction.alt} width="800" height="800" loading="lazy" decoding="async"/><span aria-hidden="true">{direction.number}</span></div>
         <div className="direction-caption"><div><h3>{direction.label}</h3><p>{direction.title}</p></div><ArrowUpRight size={26} strokeWidth={1.5} aria-hidden="true"/></div>
@@ -193,79 +288,16 @@ export default function Home() {
       <div className="direction-more"><p>А ещё</p><Link to="/catalog/tags">Бирки и ярлыки <ArrowUpRight size={16} aria-hidden="true"/></Link><Link to="/catalog/vinyl">Винил и плоттер <ArrowUpRight size={16} aria-hidden="true"/></Link><Link to="/catalog/windows">Оформление витрин <ArrowUpRight size={16} aria-hidden="true"/></Link><span>Изображения — визуальные концепции.</span></div>
     </section>
 
-    <div className="home-catalog" data-reveal><CatalogShowcase/></div>
-    <div className="home-kits" data-reveal><ReadyKits/></div>
-    <div className="home-business" data-reveal><BusinessPlans/></div>
+    <div className="home-catalog"><CatalogShowcase/></div>
+    <div className="home-kits"><ReadyKits/></div>
+    <div className="home-business"><BusinessPlans/></div>
 
-    
-<section
-  className="studio-section"
-  id="about"
-  aria-labelledby="studio-title"
->
-  <div className="page-width studio-grid">
-    <div className="studio-copy" data-reveal>
-      <p className="eyebrow">
-        О СТУДИИ / CREATIVE PRINT STUDIO
-      </p>
-
-      <h2 id="studio-title" className="studio-tagline">
-        TAKTO.
-      </h2>
-
-      <p>
-        Соединяем дизайн и производство, чтобы ваш бренд
-        можно было увидеть, почувствовать и взять в руки.
-      </p>
-
-      <p>
-        От наклейки до упаковки: поможем выбрать материал,
-        продумать детали и создать цельное впечатление.
-      </p>
-
-      <a
-        className="text-link"
-        href={TELEGRAM_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Обсудить идею
-        <ArrowUpRight size={20} aria-hidden="true" />
-      </a>
-    </div>
-
-    
-
-<div className="studio-photo" data-reveal>
-  <img
-    src={studioImage}
-    width="800"
-    height="800"
-    loading="lazy"
-    decoding="async"
-    alt="Фирменная продукция TAKTO."
-    style={{
-      display: 'block',
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-    }}
-  />
-
-  <span className="studio-stamp">
-    <Star size={24} aria-hidden="true" />
-    <span>
-      БОЛЬШЕ, ЧЕМ<br />
-      ПРОСТО ПЕЧАТЬ
-    </span>
-  </span>
-</div>
-
-
-  </div>
-</section>
-
-
+    <section className="studio-section" id="about" aria-labelledby="studio-title">
+      <div className="page-width studio-grid">
+        <div className="studio-copy" data-reveal><p className="eyebrow">О СТУДИИ / CREATIVE PRINT STUDIO</p><h2 id="studio-title" className="studio-tagline">TAKTO.</h2><p>Соединяем дизайн и производство, чтобы ваш бренд можно было увидеть, почувствовать и взять в руки.</p><p>От наклейки до упаковки: поможем выбрать материал, продумать детали и создать цельное впечатление.</p><a className="text-link" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Обсудить идею <ArrowUpRight size={20} aria-hidden="true"/></a></div>
+        <div className="studio-photo"><img src="/assets/23-material-fan.webp" width="800" height="800" loading="lazy" decoding="async" alt="Веер фактурных, голографических и цветных материалов TAKTO."/><span className="studio-stamp"><Star size={24} aria-hidden="true"/><span>БОЛЬШЕ, ЧЕМ<br/>ПРОСТО ПЕЧАТЬ</span></span></div>
+      </div>
+    </section>
 
     <section className="process-section page-width section-space" id="services" aria-labelledby="process-title">
       <div className="section-heading" data-reveal><div><p className="eyebrow">КАК МЫ РАБОТАЕМ</p><h2 id="process-title">Простой<br/> процесс</h2></div><ArrowDown className="section-arrow" size={38} strokeWidth={1.2} aria-hidden="true"/></div>
@@ -275,8 +307,8 @@ export default function Home() {
 
     <section className="faq-section page-width" aria-labelledby="faq-title">
       <div className="faq-heading" data-reveal><p className="eyebrow">ВОПРОСЫ И ОТВЕТЫ</p><h2 id="faq-title">FAQ</h2><a className="text-link" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Задать вопрос <ArrowUpRight size={18} aria-hidden="true"/></a></div>
-      <div className="faq-list" data-reveal>{faqs.map(([question, answer], index) => <FAQItem key={question} question={question} answer={answer} index={index}/>)}</div>
-      <div className="faq-visual" data-reveal><img src="/assets/01-stickers.webp" width="800" height="800" loading="lazy" decoding="async" alt="Фигурные стикеры TAKTO. с голографическим эффектом"/><span>ДЕТАЛИ РЕШАЮТ.</span></div>
+      <div className="faq-list" data-stagger>{faqs.map(([question, answer], index) => <FAQItem key={question} question={question} answer={answer} index={index}/>)}</div>
+      <div className="faq-visual"><img src="/assets/01-stickers.webp" width="800" height="800" loading="lazy" decoding="async" alt="Фигурные стикеры TAKTO. с голографическим эффектом"/><span>ДЕТАЛИ РЕШАЮТ.</span></div>
     </section>
 
     <section className="contact-section page-width" id="contacts" aria-labelledby="contact-title">
