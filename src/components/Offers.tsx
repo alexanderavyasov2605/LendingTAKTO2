@@ -3,15 +3,20 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Plus } from 'lucide-react';
 import { useCommerce } from '../commerce';
 import { additionalBatchPrice, businessPlans, commercialTermsConfirmed, readyKits, subscriptionTerms, welcomeKitPrice } from '../config/offers';
 import { formatPrice } from '../data/pricing';
-import '../pages/products.css';
+import '../pages/products.css';import startImage from '../../nabstan.png';
+import standardImage from '../../nablite.png';
+import premiumImage from '../../nabprem.png';
+import marketplaceImage from '../../nabmarket.png';
+import spaceImage from '../../nabSpace.png';
 
 const kitImages: Record<string, string> = {
-  start: '/nabstan.png',
-  standard: '/nablite.png',
-  premium: '/nabprem.png',
-  marketplace: '/nabmarket.png',
-  space: '/nabSpace.png',
+  start: startImage,
+  standard: standardImage,
+  premium: premiumImage,
+  marketplace: marketplaceImage,
+  space: spaceImage,
 };
+
 
 
 const kitImages: Record<string, string> = {
