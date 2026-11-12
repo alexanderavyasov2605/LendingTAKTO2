@@ -10,16 +10,6 @@ import marketplaceImage from '../../nabmarket.png';
 import spaceImage from '../../nabSpace.png';
 
 const kitImages: Record<string, string> = {
-  start: startImage,
-  standard: standardImage,
-  premium: premiumImage,
-  marketplace: marketplaceImage,
-  space: spaceImage,
-};
-
-
-
-const kitImages: Record<string, string> = {
   start: '/nabstan.png',
   standard: '/nablite.png',
   premium: '/nabprem.png',
