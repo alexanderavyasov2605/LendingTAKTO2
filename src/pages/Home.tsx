@@ -308,12 +308,71 @@ export default function Home() {
     <div className="home-kits"><ReadyKits/></div>
     <div className="home-business"><BusinessPlans/></div>
 
-    <section className="studio-section" id="about" aria-labelledby="studio-title">
-      <div className="page-width studio-grid">
-        <div className="studio-copy" data-reveal><p className="eyebrow">О СТУДИИ / CREATIVE PRINT STUDIO</p><h2 id="studio-title" className="studio-tagline">TAKTO.</h2><p>Соединяем дизайн и производство, чтобы ваш бренд можно было увидеть, почувствовать и взять в руки.</p><p>От наклейки до упаковки: поможем выбрать материал, продумать детали и создать цельное впечатление.</p><a className="text-link" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Обсудить идею <ArrowUpRight size={20} aria-hidden="true"/></a></div>
-        <div className="studio-photo"><img src="/assets/23-material-fan.webp" width="800" height="800" loading="lazy" decoding="async" alt="Веер фактурных, голографических и цветных материалов TAKTO."/><span className="studio-stamp"><Star size={24} aria-hidden="true"/><span>БОЛЬШЕ, ЧЕМ<br/>ПРОСТО ПЕЧАТЬ</span></span></div>
-      </div>
-    </section>
+    <section
+  className="studio-section"
+  id="about"
+  aria-labelledby="studio-title"
+>
+  <div className="page-width studio-grid">
+    <div className="studio-copy" data-reveal>
+      <p className="eyebrow">
+        О СТУДИИ / CREATIVE PRINT STUDIO
+      </p>
+
+      <h2 id="studio-title" className="studio-tagline">
+        TAKTO.
+      </h2>
+
+      <p>
+        Соединяем дизайн и производство, чтобы ваш бренд
+        можно было увидеть, почувствовать и взять в руки.
+      </p>
+
+      <p>
+        От наклейки до упаковки: поможем выбрать материал,
+        продумать детали и создать цельное впечатление.
+      </p>
+
+      <a
+        className="text-link"
+        href={TELEGRAM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Обсудить идею
+        <ArrowUpRight size={20} aria-hidden="true" />
+      </a>
+    </div>
+
+    
+
+<div className="studio-photo" data-reveal>
+  <img
+    src={studioImage}
+    width="800"
+    height="800"
+    loading="lazy"
+    decoding="async"
+    alt="Фирменная продукция TAKTO."
+    style={{
+      display: 'block',
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    }}
+  />
+
+  <span className="studio-stamp">
+    <Star size={24} aria-hidden="true" />
+    <span>
+      БОЛЬШЕ, ЧЕМ<br />
+      ПРОСТО ПЕЧАТЬ
+    </span>
+  </span>
+</div>
+
+
+  </div>
 
     <section className="process-section page-width section-space" id="services" aria-labelledby="process-title">
       <div className="section-heading" data-reveal><div><p className="eyebrow">КАК МЫ РАБОТАЕМ</p><h2 id="process-title">Простой<br/> процесс</h2></div><ArrowDown className="section-arrow" size={38} strokeWidth={1.2} aria-hidden="true"/></div>
