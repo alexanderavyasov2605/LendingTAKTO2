@@ -8,6 +8,7 @@ import { CatalogShowcase } from '../components/CatalogShowcase';
 import { ReadyKits, BusinessPlans } from '../components/Offers';
 import heroImage from '../../Hero.png';
 import hero2Image from '../../Hero2.png';
+import studioImage from '../../Hero1.png';
 
 const TELEGRAM_URL = 'https://t.me/takto_order';
 
@@ -199,8 +200,23 @@ export default function Home() {
     <section className="studio-section" id="about" aria-labelledby="studio-title">
       <div className="page-width studio-grid">
         <div className="studio-copy" data-reveal><p className="eyebrow">О СТУДИИ / CREATIVE PRINT STUDIO</p><h2 id="studio-title" className="studio-tagline">TAKTO.</h2><p>Соединяем дизайн и производство, чтобы ваш бренд можно было увидеть, почувствовать и взять в руки.</p><p>От наклейки до упаковки: поможем выбрать материал, продумать детали и создать цельное впечатление.</p><a className="text-link" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Обсудить идею <ArrowUpRight size={20} aria-hidden="true"/></a></div>
-        <div className="studio-photo" data-reveal><img src="Hero1.png" width="800" height="800" loading="lazy" decoding="async" alt="Веер фактурных, голографических и цветных материалов TAKTO."/><span className="studio-stamp"><Star size={24} aria-hidden="true"/><span>БОЛЬШЕ, ЧЕМ<br/>ПРОСТО ПЕЧАТЬ</span></span></div>
-      </div>
+        <div className="studio-photo" data-reveal>
+  <img
+    src={studioImage}
+    width="800"
+    height="800"
+    loading="lazy"
+    decoding="async"
+    alt="Фирменная продукция TAKTO."
+  />
+  <span className="studio-stamp">
+    <Star size={24} aria-hidden="true" />
+    <span>
+      БОЛЬШЕ, ЧЕМ<br />
+      ПРОСТО ПЕЧАТЬ
+    </span>
+  </span>
+</div>
     </section>
 
     <section className="process-section page-width section-space" id="services" aria-labelledby="process-title">
