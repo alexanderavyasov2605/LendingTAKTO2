@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { ArrowRight, CalendarDays, Send, X } from 'lucide-react';
-import launchArtwork from './assets/takto-launch.png';
+import launchArtwork from '../../assets/takto-launch.png';
 import styles from './LaunchModal.module.css';
 
 const LAUNCH_AT = Date.parse('2027-01-10T00:00:00+05:00');
