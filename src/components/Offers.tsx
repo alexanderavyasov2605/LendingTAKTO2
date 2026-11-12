@@ -9,13 +9,15 @@ import premiumImage from '../../nabprem.png';
 import marketplaceImage from '../../nabmarket.png';
 import spaceImage from '../../nabSpace.png';
 
+
 const kitImages: Record<string, string> = {
-  start: '/nabstan.png',
-  standard: '/nablite.png',
-  premium: '/nabprem.png',
-  marketplace: '/nabmarket.png',
-  space: '/nabSpace.png',
+  start: startImage,
+  standard: standardImage,
+  premium: premiumImage,
+  marketplace: marketplaceImage,
+  space: spaceImage,
 };
+
 
 function KitArtwork({
   id,
