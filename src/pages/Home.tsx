@@ -244,23 +244,7 @@ export default function Home() {
   </div>
 </section>
 
-  <img
-    src={studioImage}
-    width="800"
-    height="800"
-    loading="lazy"
-    decoding="async"
-    alt="Фирменная продукция TAKTO."
-  />
-  <span className="studio-stamp">
-    <Star size={24} aria-hidden="true" />
-    <span>
-      БОЛЬШЕ, ЧЕМ<br />
-      ПРОСТО ПЕЧАТЬ
-    </span>
-  </span>
-</div>
-    </section>
+
 
     <section className="process-section page-width section-space" id="services" aria-labelledby="process-title">
       <div className="section-heading" data-reveal><div><p className="eyebrow">КАК МЫ РАБОТАЕМ</p><h2 id="process-title">Простой<br/> процесс</h2></div><ArrowDown className="section-arrow" size={38} strokeWidth={1.2} aria-hidden="true"/></div>
