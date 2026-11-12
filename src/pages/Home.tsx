@@ -308,7 +308,7 @@ export default function Home() {
     <div className="home-kits"><ReadyKits/></div>
     <div className="home-business"><BusinessPlans/></div>
 
-    <section
+  <section
   className="studio-section"
   id="about"
   aria-labelledby="studio-title"
@@ -373,7 +373,7 @@ export default function Home() {
 
 
   </div>
-
+</section>
     <section className="process-section page-width section-space" id="services" aria-labelledby="process-title">
       <div className="section-heading" data-reveal><div><p className="eyebrow">КАК МЫ РАБОТАЕМ</p><h2 id="process-title">Простой<br/> процесс</h2></div><ArrowDown className="section-arrow" size={38} strokeWidth={1.2} aria-hidden="true"/></div>
       <div className="process-grid" data-stagger>{steps.map(step => <article className="process-card" key={step.n}><span className="step-number">{step.n}</span><h3>{step.title}</h3><p>{step.text}</p></article>)}</div>
