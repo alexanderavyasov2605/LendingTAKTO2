@@ -105,8 +105,11 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
 .brand-dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; flex-shrink: 0; }
 .editorial-home .hero-heading { font-size: clamp(46px, 5.8vw, 86px); line-height: 1.1; letter-spacing: -.045em; text-wrap: initial; }
 .hero-heading-line { display: block; }
-.hero-heading-line:first-child { font-size: 1.35em; line-height: 1; margin-bottom: .06em; }
+.hero-heading-lead { font-size: 1.35em; line-height: 1; margin-bottom: .06em; }
 .headline-line { padding-bottom: .04em; margin-bottom: -.04em; }
+.headline-line-mask { overflow: clip; }
+/* Visible by default; GSAP owns the one-shot product reveal only while mounted. */
+.hero-image-curtain { position: absolute; inset: -1px; z-index: 3; background: var(--paper); transform: scaleX(0); transform-origin: right center; pointer-events: none; }
 .hero-aside { margin-top: 24px; }
 .hero-description { font-size: 16px; line-height: 1.6; max-width: 40ch; }
 .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 28px; margin-top: 24px; }
@@ -124,6 +127,7 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
 .slide-number span { color: var(--muted); }
 .slider-arrow { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--ink); border-radius: 50%; flex-shrink: 0; transition: background .3s var(--motion-out), transform .3s var(--motion-out); }
 .slider-arrow:hover { background: var(--yellow); }
+.slider-arrow svg { transition: transform .3s var(--motion-out); }
 .slider-dots { display: flex; }
 .slider-dots button { width: 28px; height: 44px; display: grid; place-items: center; }
 .slider-dots button:after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--muted); transition: background .3s var(--motion-out), transform .3s var(--motion-out); }
@@ -354,7 +358,15 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
 .information-page > h1 { font-size: clamp(32px, 5vw, 60px); font-weight: 600; line-height: 1.14; letter-spacing: -.045em; overflow-wrap: anywhere; }
 .information-page > h2 { font-size: 24px; font-weight: 500; line-height: 1.35; margin-top: 32px; margin-bottom: 14px; }
 .information-page > p:not(.eyebrow) { font-size: 16px; line-height: 1.8; color: var(--muted); }
+.editorial-home .home-kits .kit-art { transform-origin: center; transition: transform .55s var(--motion-out); }
+.editorial-home .home-business .business-grid article { transition: background .3s var(--motion-out), border-color .3s var(--motion-out); }
+.direction-card:focus-visible .direction-caption > svg, .text-link:focus-visible svg { transform: translate(3px, -3px); }
+.button:focus-visible svg { transform: translateX(3px); }
 @media (hover: hover) and (pointer: fine) {
+  .slider-arrow:first-of-type:hover svg { transform: translateX(-3px); }
+  .slider-arrow:last-of-type:hover svg { transform: translateX(3px); }
+  .editorial-home .home-kits .kit-card:hover .kit-art { transform: scale(1.025); }
+  .editorial-home .home-business .business-grid article:hover { background: #48511d; border-color: var(--yellow); }
   .direction-card:hover { border-color: var(--ink); }
   .direction-card:hover img { transform: scale(1.035); }
   .direction-card:hover .direction-caption > svg, .text-link:hover svg { transform: translate(3px, -3px); }
@@ -466,7 +478,7 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
   .hero-copy { display: block; }
   .hero-eyebrow { font-size: 10px; letter-spacing: .025em; margin-bottom: 16px; }
   .editorial-home .hero-heading { font-size: clamp(38px, 10.6vw, 62px); letter-spacing: -.04em; }
-  .hero-heading-line:first-child { font-size: 1.18em; }
+  .hero-heading-lead { font-size: 1.18em; }
   .hero-aside { margin-top: 18px; }
   .hero-description { font-size: 15px; line-height: 1.6; max-width: 40ch; }
   .hero-actions { margin-top: 18px; gap: 8px 18px; }
@@ -573,5 +585,7 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
   .contact-section { padding-inline: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .hero-image-curtain { display: none; }
+  .editorial-home :is(.direction-image img, .kit-art, .direction-caption > svg, .text-link svg, .button svg, .slider-arrow svg) { transform: none !important; }
   *, *:before, *:after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
