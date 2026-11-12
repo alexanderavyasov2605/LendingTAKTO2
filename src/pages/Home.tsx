@@ -6,13 +6,29 @@ import { TelegramButton } from '../components/TelegramButton';
 import { useCommerce } from '../commerce';
 import { CatalogShowcase } from '../components/CatalogShowcase';
 import { ReadyKits, BusinessPlans } from '../components/Offers';
+import heroImage from '../../Hero.png';
+import hero2Image from '../../Hero2.png';
+import studioImage from '../../Hero1.png';
+
 
 const TELEGRAM_URL = 'https://t.me/takto_order';
 
 const slides = [
-  { image: '/assets/24-hero.webp', alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки', label: 'Упаковка с характером' },
-  { image: '/assets/01-stickers.webp', alt: 'Фигурные голографические стикеры TAKTO.', label: 'Маленькие детали. Большие эмоции.' },
-  { image: '/assets/windows.webp', alt: 'Фирменная графика TAKTO. на стекле витрины', label: 'Ваш бренд — в пространстве' },
+  {
+    image: heroImage,
+    alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки',
+    label: 'Упаковка с характером'
+  },
+  {
+    image: hero2Image,
+    alt: 'Фигурные голографические стикеры TAKTO.',
+    label: 'Маленькие детали. Большие эмоции.'
+  },
+  {
+    image: '/assets/windows.webp',
+    alt: 'Фирменная графика TAKTO. на стекле витрины',
+    label: 'Ваш бренд — в пространстве'
+  },
 ];
 
 const directions = [
