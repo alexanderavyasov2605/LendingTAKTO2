@@ -6,8 +6,8 @@ import { formatPrice } from '../data/pricing';
 import '../pages/products.css';import startImage from '../../nabstan.png';
 import standardImage from '../../nablite.png';
 import premiumImage from '../../nabprem.png';
-import marketplaceImage from '../../nabmarket.png';
-import spaceImage from '../../nabSpace.png';
+import marketplaceImage from '../../nabmarket1.png';
+import spaceImage from '../../nabSpace1.png';
 
 
 const kitImages: Record<string, string> = {
