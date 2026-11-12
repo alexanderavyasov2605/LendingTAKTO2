@@ -3,11 +3,11 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Plus } from 'lucide-react';
 import { useCommerce } from '../commerce';
 import { additionalBatchPrice, businessPlans, commercialTermsConfirmed, readyKits, subscriptionTerms, welcomeKitPrice } from '../config/offers';
 import { formatPrice } from '../data/pricing';
-import '../pages/products.css';import startImage from '../../nabstan.png';
-import standardImage from '../../nablite.png';
+import '../pages/products.css';import startImage from '../../nablite.png';
+import standardImage from '../../nabstan.png';
 import premiumImage from '../../nabprem.png';
 import marketplaceImage from '../../nabmarket1.png';
-import spaceImage from '../../nabSpace1.png';
+import spaceImage from '../../nabspace1.png';
 
 
 const kitImages: Record<string, string> = {
