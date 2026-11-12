@@ -197,10 +197,53 @@ export default function Home() {
     <div className="home-kits" data-reveal><ReadyKits/></div>
     <div className="home-business" data-reveal><BusinessPlans/></div>
 
-    <section className="studio-section" id="about" aria-labelledby="studio-title">
-      <div className="page-width studio-grid">
-        <div className="studio-copy" data-reveal><p className="eyebrow">О СТУДИИ / CREATIVE PRINT STUDIO</p><h2 id="studio-title" className="studio-tagline">TAKTO.</h2><p>Соединяем дизайн и производство, чтобы ваш бренд можно было увидеть, почувствовать и взять в руки.</p><p>От наклейки до упаковки: поможем выбрать материал, продумать детали и создать цельное впечатление.</p><a className="text-link" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Обсудить идею <ArrowUpRight size={20} aria-hidden="true"/></a></div>
-        <div className="studio-photo" data-reveal>
+    
+<section
+  className="studio-section"
+  id="about"
+  aria-labelledby="studio-title"
+>
+  <div className="page-width studio-grid">
+    <div className="studio-copy" data-reveal>
+      <p className="eyebrow">
+        О СТУДИИ / CREATIVE PRINT STUDIO
+      </p>
+
+      <h2 id="studio-title" className="studio-tagline">
+        TAKTO.
+      </h2>
+
+      <p>
+        Соединяем дизайн и производство, чтобы ваш бренд
+        можно было увидеть, почувствовать и взять в руки.
+      </p>
+
+      <p>
+        От наклейки до упаковки: поможем выбрать материал,
+        продумать детали и создать цельное впечатление.
+      </p>
+
+      <a
+        className="text-link"
+        href={TELEGRAM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Обсудить идею
+        <ArrowUpRight size={20} aria-hidden="true" />
+      </a>
+    </div>
+
+    <div className="studio-photo" data-reveal>
+      <img
+        src="/about-takto.png"
+        alt="TAKTO. — студия печати и брендирования"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
   <img
     src={studioImage}
     width="800"
