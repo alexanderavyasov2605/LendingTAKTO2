@@ -6,14 +6,30 @@ import { TelegramButton } from '../components/TelegramButton';
 import { useCommerce } from '../commerce';
 import { CatalogShowcase } from '../components/CatalogShowcase';
 import { ReadyKits, BusinessPlans } from '../components/Offers';
+import heroImage from '../../Hero.png';
+import hero2Image from '../../Hero2.png';
 
 const TELEGRAM_URL = 'https://t.me/takto_order';
 
+
 const slides = [
-  { image: 'Hero.png', alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки', label: 'Упаковка с характером' },
-  { image: 'Hero2.png', alt: 'Фигурные голографические стикеры TAKTO.', label: 'Маленькие детали. Большие эмоции.' },
-  { image: '/assets/windows.webp', alt: 'Фирменная графика TAKTO. на стекле витрины', label: 'Ваш бренд — в пространстве' },
+  {
+    image: heroImage,
+    alt: 'Коробка TAKTO., голографические наклейки, бирка и визитки',
+    label: 'Упаковка с характером'
+  },
+  {
+    image: hero2Image,
+    alt: 'Фигурные голографические стикеры TAKTO.',
+    label: 'Маленькие детали. Большие эмоции.'
+  },
+  {
+    image: '/assets/windows.webp',
+    alt: 'Фирменная графика TAKTO. на стекле витрины',
+    label: 'Ваш бренд — в пространстве'
+  },
 ];
+
 
 const directions = [
   { slug: 'stickers', number: '01', title: 'Маленькая деталь.\nБольшой характер.', label: 'Стикеры и наклейки', image: '/assets/stickers-light.webp', alt: 'Визуальная концепция фигурных стикеров TAKTO.' },
