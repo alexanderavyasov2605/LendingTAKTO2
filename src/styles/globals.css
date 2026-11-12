@@ -47,7 +47,7 @@ p { text-wrap: pretty; }
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 section[id] { scroll-margin-top: 104px; }
 button, a, input, select, textarea { transition-timing-function: var(--motion-out); }
-.page-width { width: calc(100% - 64px); max-width: 1200px; margin-inline: auto; }
+.page-width { width: min(1376px, calc(100% - 64px)); margin-inline: auto; }
 .eyebrow { font-size: 12px; font-weight: 500; letter-spacing: .055em; line-height: 1.5; }
 .button { min-height: 48px; padding: 13px 24px; display: inline-flex; align-items: center; justify-content: center; gap: 20px; border: 1px solid transparent; border-radius: var(--radius); font-size: 14px; font-weight: 600; line-height: 1.4; transition: background .3s var(--motion-out), color .3s var(--motion-out), border-color .3s var(--motion-out), transform .3s var(--motion-out); }
 .button svg { flex-shrink: 0; transition: transform .3s var(--motion-out); }
@@ -172,20 +172,11 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
 .editorial-home .home-catalog .section-heading { margin-bottom: 24px; }
 .editorial-home .home-catalog article { border-radius: var(--radius-card); border-color: var(--line); }
 
-/* Inset colour panels; the page and the cards no longer stretch on wide screens. */
+/* Full-width colour panels retain the original responsive content containers. */
 .editorial-home :is(.home-kits, .home-business) {
-  width: calc(100% - 64px);
-  max-width: 1120px;
-  margin-inline: auto;
   border-radius: var(--radius-card);
 }
 .editorial-home .home-kits { margin-block: 8px 24px; background: var(--yellow); }
-.editorial-home .home-kits .ready-kits,
-.editorial-home .home-business .business-section > .page-width {
-  width: calc(100% - 64px);
-  max-width: 1056px;
-  margin-inline: auto;
-}
 .editorial-home .home-kits .ready-kits { padding-block: 28px; background: transparent; }
 .editorial-home :is(.home-kits, .home-business) .section-heading {
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
@@ -200,8 +191,7 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
   line-height: 1.65;
 }
 .editorial-home .home-kits .kits-toolbar { gap: 16px; padding-block: 12px; }
-.editorial-home .home-kits .kits-track { gap: 16px; padding-bottom: 14px; }
-.editorial-home .home-kits .kit-card { flex: 0 0 calc((100% - 32px) / 3); max-width: 360px; }
+.editorial-home .home-kits .kits-track { padding-bottom: 14px; }
 .editorial-home .home-kits .kit-content { padding-top: 18px; }
 .editorial-home .home-kits .kit-content h3 { margin: 8px 0; font-family: var(--font-display); font-size: 28px; font-weight: 400; }
 .editorial-home .home-kits .kit-number { font-size: 10px; letter-spacing: .08em; }
@@ -267,10 +257,6 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
 .editorial-home .home-business :focus-visible { outline-color: var(--yellow); }
 
 @media (max-width: 1024px) {
-  .editorial-home :is(.home-kits, .home-business) { width: calc(100% - 48px); }
-  .editorial-home .home-kits .ready-kits,
-  .editorial-home .home-business .business-section > .page-width { width: calc(100% - 48px); }
-  .editorial-home .home-kits .kit-card { flex-basis: calc((100% - 16px) / 2.25); }
   .editorial-home .home-business .business-grid { gap: 12px; }
   .editorial-home .home-business .business-grid article { padding: 16px; }
 }
@@ -283,13 +269,9 @@ button, a, input, select, textarea { transition-timing-function: var(--motion-ou
   .editorial-home .home-business .business-extras { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
-  .editorial-home :is(.home-kits, .home-business) { width: calc(100% - 32px); }
-  .editorial-home .home-kits .ready-kits,
-  .editorial-home .home-business .business-section > .page-width { width: calc(100% - 32px); }
   .editorial-home .home-kits .ready-kits,
   .editorial-home .home-business .business-section { padding-block: 24px; }
   .editorial-home :is(.home-kits, .home-business) h2 { font-size: 32px; }
-  .editorial-home .home-kits .kit-card { flex-basis: 86%; max-width: 320px; }
   .editorial-home .home-business .business-period { align-items: flex-start; flex-direction: column; gap: 12px; }
   .editorial-home .home-business .business-period > span { max-width: none; font-size: 14px; }
   .editorial-home .home-business .business-period > div { width: 100%; }
