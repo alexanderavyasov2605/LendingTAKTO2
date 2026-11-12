@@ -13,10 +13,27 @@ const kitImages: Record<string, string> = {
   space: '/nabSpace.png',
 };
 
-function KitArtwork({ id, name }: { id: string; name: string }) {
+
+const kitImages: Record<string, string> = {
+  start: '/nabstan.png',
+  standard: '/nablite.png',
+  premium: '/nabprem.png',
+  marketplace: '/nabmarket.png',
+  space: '/nabSpace.png',
+};
+
+function KitArtwork({
+  id,
+  name,
+}: {
+  id: string;
+  name: string;
+}) {
+  const image = kitImages[id];
+
   return (
     <img
-      src={kitImages[id]}
+      src={image}
       alt={`Набор TAKTO. ${name}`}
       className={`kit-art kit-art-${id}`}
       loading="lazy"
@@ -30,6 +47,7 @@ function KitArtwork({ id, name }: { id: string; name: string }) {
     />
   );
 }
+
 
 export function ReadyKits() {
   const { openContact } = useCommerce();
