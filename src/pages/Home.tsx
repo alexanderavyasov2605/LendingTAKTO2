@@ -234,13 +234,26 @@ export default function Home() {
       </a>
     </div>
 
-    <div className="studio-photo" data-reveal>
-      <img
-        src="/about-takto.png"
-        alt="TAKTO. — студия печати и брендирования"
-        loading="lazy"
-      />
-    </div>
+    
+<div className="studio-photo" data-reveal>
+  <img
+    src={studioImage}
+    width="800"
+    height="800"
+    loading="lazy"
+    decoding="async"
+    alt="Фирменная продукция TAKTO."
+  />
+
+  <span className="studio-stamp">
+    <Star size={24} aria-hidden="true" />
+    <span>
+      БОЛЬШЕ, ЧЕМ<br />
+      ПРОСТО ПЕЧАТЬ
+    </span>
+  </span>
+</div>
+
   </div>
 </section>
 
