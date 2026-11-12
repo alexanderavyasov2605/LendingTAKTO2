@@ -6,6 +6,7 @@ import { TelegramButton } from '../components/TelegramButton';
 import { useCommerce } from '../commerce';
 import { CatalogShowcase } from '../components/CatalogShowcase';
 import { ReadyKits, BusinessPlans } from '../components/Offers';
+import { LaunchModal } from './LaunchModal';
 import heroImage from '../../Hero.png';
 import hero2Image from '../../Hero2.png';
 import studioImage from '../../Hero1.png';
@@ -276,7 +277,7 @@ export default function Home() {
     return () => { disposed = true; media.revert(); };
   }, { scope: root });
 
-  return <main id="main-content" className="editorial-home" ref={root}>
+  return <><main id="main-content" className="editorial-home" ref={root}>
     <div className="first-screen">
       <section className="hero page-width" aria-labelledby="hero-title">
         <div className="hero-copy">
@@ -308,7 +309,7 @@ export default function Home() {
     <div className="home-kits"><ReadyKits/></div>
     <div className="home-business"><BusinessPlans/></div>
 
-  <section
+    <section
   className="studio-section"
   id="about"
   aria-labelledby="studio-title"
@@ -373,7 +374,8 @@ export default function Home() {
 
 
   </div>
-</section>
+
+    </section>
     <section className="process-section page-width section-space" id="services" aria-labelledby="process-title">
       <div className="section-heading" data-reveal><div><p className="eyebrow">КАК МЫ РАБОТАЕМ</p><h2 id="process-title">Простой<br/> процесс</h2></div><ArrowDown className="section-arrow" size={38} strokeWidth={1.2} aria-hidden="true"/></div>
       <div className="process-grid" data-stagger>{steps.map(step => <article className="process-card" key={step.n}><span className="step-number">{step.n}</span><h3>{step.title}</h3><p>{step.text}</p></article>)}</div>
@@ -393,5 +395,5 @@ export default function Home() {
       <p>Подберём форму и материал, рассчитаем стоимость и поможем воплотить вашу идею.</p>
       <div className="contact-actions" data-reveal><button type="button" className="button button-paper" onClick={() => openContact()}>Обсудить проект <ArrowRight size={20} aria-hidden="true"/></button><TelegramButton className="contact-telegram"/></div>
     </section>
-  </main>;
+  </main><LaunchModal onAfterClose={() => { if (root.current) ScrollTrigger.refresh(); }}/></>;
 }
